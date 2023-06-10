@@ -8,6 +8,7 @@ import { connectDb, disconnectDB } from './config/database';
 loadEnv();
 
 const app = express();
+
 app.use(cors()).use(express.json());
 
 export async function init(): Promise<Express> {

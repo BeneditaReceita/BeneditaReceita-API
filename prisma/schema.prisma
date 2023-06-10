@@ -9,3 +9,46 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id             Int              @id @default(autoincrement())
+  email          String?          @unique @db.VarChar(255)
+  password       String?          @db.VarChar(255)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  Recipe         Recipe[]
+}
+
+model Recipe {
+  id             Int              @id @default(autoincrement())
+  userId         Int             
+  name           String           @db.VarChar(255)
+  Description    String
+  img            String           
+  createdAt      DateTime         @default(now())
+  User                   User?           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Ingredients            Ingredients[]
+  RecipeCategoryRel      RecipeCategoryRel[]
+}
+
+model Ingredients {
+  id             Int              @id @default(autoincrement())
+  RecipeId       Int            
+  Recipe         Recipe           @relation(fields: [RecipeId], references: [id], onDelete: Cascade)
+
+}
+
+model Categories{
+  id             Int              @id @default(autoincrement())
+  name           String
+  RecipeCategoryRel      RecipeCategoryRel[]
+}
+
+model RecipeCategoryRel{
+    id             Int              @id @default(autoincrement())
+    RecipeId       Int            
+    CategoryId     Int
+    Categories     Categories           @relation(fields: [CategoryId], references: [id], onDelete: Cascade)
+    Recipe         Recipe           @relation(fields: [RecipeId], references: [id], onDelete: Cascade)
+
+}
