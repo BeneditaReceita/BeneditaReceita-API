@@ -1,15 +1,24 @@
 import 'reflect-metadata';
 import 'express-async-errors';
-import express, { Express } from 'express';
+import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import loadEnv from './config/envs';
 import { connectDb, disconnectDB } from './config/database';
+import { recipesRouter } from './routers/recipeRouter';
+import { handleApplicationErrors } from './middlewares/error_handling_middleware';
 
 loadEnv();
 
 const app = express();
 
-app.use(cors()).use(express.json());
+app
+  .use(cors())
+  .use(express.json())
+  .get('/health', (_req: Request, res: Response) => {
+    return res.status(200).send('OK!');
+  })
+  .use('/recipes', recipesRouter)
+  .use(handleApplicationErrors);
 
 export async function init(): Promise<Express> {
   connectDb();

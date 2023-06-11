@@ -26,16 +26,18 @@ model Recipe {
   Description    String
   img            String           
   createdAt      DateTime         @default(now())
-  User                   User?           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User                   User?           @relation(fields: [userId], references: [id], onDelete: Cascade) 
   Ingredients            Ingredients[]
   RecipeCategoryRel      RecipeCategoryRel[]
 }
 
 model Ingredients {
   id             Int              @id @default(autoincrement())
-  RecipeId       Int            
+  RecipeId       Int 
+  quantity       Int
+  measureUnit    String           @db.VarChar(255)
+  name           String           
   Recipe         Recipe           @relation(fields: [RecipeId], references: [id], onDelete: Cascade)
-
 }
 
 model Categories{

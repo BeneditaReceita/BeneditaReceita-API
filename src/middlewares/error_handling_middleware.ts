@@ -9,6 +9,11 @@ export function handleApplicationErrors(
   _next: NextFunction,
 ) {
   if (err.name === 'IncompleteRecipeError') {
+    return res.status(httpStatus.UNPROCESSABLE_ENTITY).send({
+      message: err.message,
+    });
+  }
+  if (err.name === 'BadRequestError') {
     return res.status(httpStatus.BAD_REQUEST).send({
       message: err.message,
     });

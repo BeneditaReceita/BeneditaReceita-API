@@ -2,6 +2,7 @@ import { prisma } from '@/config/database';
 
 async function addRecipe(name: string, Description: string, img: string, userId?: number) {
   let query;
+
   if (userId) {
     query = await prisma.recipe.create({
       data: {
@@ -21,6 +22,7 @@ async function addRecipe(name: string, Description: string, img: string, userId?
       },
     });
   }
+
   return query;
 }
 
@@ -35,4 +37,5 @@ async function findRecipes() {
 
 export default {
   addRecipe,
+  findRecipes,
 };
