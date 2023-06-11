@@ -20,6 +20,8 @@ async function createRecipe(name: string, Description: string, img: string, user
 
 async function findRecipes() {
   const recipes = await recipeRepositories.findRecipes();
+
+  return recipes;
 }
 
 export default { createRecipe, findRecipes };

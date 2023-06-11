@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { addRecipies } from '@/controllers/recipe_controller';
+import { addRecipies, getRecipes } from '@/controllers/recipe_controller';
 const recipesRouter = Router();
 
-recipesRouter.post('', addRecipies);
+recipesRouter.post('', addRecipies).get('', getRecipes);
 
 export { recipesRouter };
