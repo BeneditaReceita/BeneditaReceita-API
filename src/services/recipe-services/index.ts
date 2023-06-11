@@ -1,12 +1,13 @@
-type recipe = {
-  userId?: number;
-  name: string;
-  Description: string;
-  img: string;
-};
-function createRecipe(userId: number, name: string, Description: string, img: string) {
-  try {
-    const { userId, name, Description, img }: { userId: number; name: string; Description: string; img: string } = prop;
-  } catch (error) {}
+import { IncompleteRecipeError } from '@/errors/IncompleteRecipe';
+import recipeRepositories from '@/repositories/recipe-repositories';
+
+async function createRecipe(name: string, Description: string, img: string, userId?: number) {
+  if (!name || !Description || !img) {
+    throw IncompleteRecipeError;
+  }
+
+  const Recipe = await recipeRepositories.addRecipe(name, Description, img, userId);
+
+  return Recipe;
 }
 export default { createRecipe };

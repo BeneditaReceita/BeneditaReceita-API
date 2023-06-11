@@ -1,8 +1,9 @@
 import { prisma } from '@/config/database';
 
 async function addRecipe(name: string, Description: string, img: string, userId?: number) {
+  let query;
   if (userId) {
-    const query = await prisma.recipe.create({
+    query = await prisma.recipe.create({
       data: {
         name,
         Description,
@@ -11,7 +12,7 @@ async function addRecipe(name: string, Description: string, img: string, userId?
       },
     });
   } else {
-    const query = await prisma.recipe.create({
+    query = await prisma.recipe.create({
       data: {
         name,
         Description,
@@ -20,6 +21,7 @@ async function addRecipe(name: string, Description: string, img: string, userId?
       },
     });
   }
+  return query;
 }
 
 async function findRecipes() {
@@ -28,6 +30,7 @@ async function findRecipes() {
       createdAt: 'desc',
     },
   });
+  return query;
 }
 
 export default {
