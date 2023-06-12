@@ -22,9 +22,10 @@ model User {
 model Recipe {
   id             Int              @id @default(autoincrement())
   userId         Int             
-  name           String           @db.VarChar(255)
+  name           String           @db.VarChar(100)
   Description    String
   img            String           
+  howTo          String
   createdAt      DateTime         @default(now())
   User                   User?           @relation(fields: [userId], references: [id], onDelete: Cascade) 
   Ingredients            Ingredients[]
