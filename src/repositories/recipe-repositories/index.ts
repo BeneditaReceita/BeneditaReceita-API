@@ -22,7 +22,7 @@ async function addRecipe(name: string, Description: string, img: string, userId?
       },
     });
   }
-
+  console.log(query);
   return query;
 }
 
@@ -30,6 +30,9 @@ async function findRecipes() {
   const query = await prisma.recipe.findMany({
     orderBy: {
       createdAt: 'desc',
+    },
+    include: {
+      Ingredients: true,
     },
   });
   return query;

@@ -28,6 +28,7 @@ export async function addRecipies(req: Request, res: Response, Next: NextFunctio
 
 export async function getRecipes(req: Request, res: Response, Next: NextFunction) {
   try {
+    console.log('nhu');
     const recipes = await recipeServices.findRecipes();
 
     return res.status(httpStatus.OK).send(recipes);
