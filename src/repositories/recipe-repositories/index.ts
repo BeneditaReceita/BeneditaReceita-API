@@ -18,7 +18,7 @@ async function addRecipe(name: string, Description: string, img: string, userId?
         name,
         Description,
         img,
-        //retirar userId
+        //retirar userId por conta de bugs
         userId: 3,
       },
     });
@@ -55,7 +55,7 @@ async function addIngredients(RecipeId: number, quantity: number, name: string, 
 async function getRecipeById(id: number) {
   const query = await prisma.recipe.findUnique({
     where: { id },
-    include: { Ingredients: true },
+    include: { Ingredients: true, User: true },
   });
   return query;
 }

@@ -1,5 +1,6 @@
 import { IncompleteRecipeError } from '@/errors/IncompleteRecipe';
 import { badRequestError } from '@/errors/bad-request-error';
+import { notFoundError } from '@/errors/notFoundError';
 import recipeRepositories from '@/repositories/recipe-repositories';
 import userRepositories from '@/repositories/user-repositories';
 import { Ingredients } from '@prisma/client';
@@ -36,4 +37,13 @@ async function findRecipes() {
   return recipes;
 }
 
-export default { createRecipe, findRecipes };
+async function findRecipeById(id: number) {
+  const recipe = await recipeRepositories.getRecipeById(id);
+
+  if (!recipe) {
+    throw notFoundError('Recipe');
+  }
+  return recipe;
+}
+
+export default { createRecipe, findRecipes, findRecipeById };
