@@ -52,8 +52,17 @@ async function addIngredients(RecipeId: number, quantity: number, name: string, 
   return query;
 }
 
+async function getRecipeById(id: number) {
+  const query = await prisma.recipe.findUnique({
+    where: { id },
+    include: { Ingredients: true },
+  });
+  return query;
+}
+
 export default {
   addRecipe,
   findRecipes,
   addIngredients,
+  getRecipeById,
 };
