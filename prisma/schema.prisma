@@ -24,12 +24,12 @@ model Ingredients {
 
 model Recipe {
   id                Int                 @id @default(autoincrement())
-  userId            Int
+  userId            Int?
   name              String              @db.VarChar(255)
   Description       String
   img               String
   createdAt         DateTime            @default(now())
-  User              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User              User?                @relation(fields: [userId], references: [id], onDelete: Cascade)
   Ingredients       Ingredients[]
   RecipeCategoryRel RecipeCategoryRel[]
 }

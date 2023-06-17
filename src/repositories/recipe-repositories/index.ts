@@ -18,11 +18,12 @@ async function addRecipe(name: string, Description: string, img: string, userId?
         name,
         Description,
         img,
-        userId: 1,
+        //retirar userId
+        userId: 3,
       },
     });
   }
-  console.log(query);
+
   return query;
 }
 
@@ -38,7 +39,21 @@ async function findRecipes() {
   return query;
 }
 
+async function addIngredients(RecipeId: number, quantity: number, name: string, measureUnit: string) {
+  const query = await prisma.ingredients.create({
+    data: {
+      RecipeId,
+      quantity,
+      name,
+      measureUnit,
+    },
+  });
+
+  return query;
+}
+
 export default {
   addRecipe,
   findRecipes,
+  addIngredients,
 };
