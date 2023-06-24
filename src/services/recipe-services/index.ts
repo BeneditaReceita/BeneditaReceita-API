@@ -10,19 +10,27 @@ async function createRecipe(
   Description: string,
   img: string,
   ingredients: Omit<Ingredients, 'id, RecipeId'>[],
+  HowTo: string,
   userId?: number,
 ) {
-  if (name == undefined || Description === undefined || img === undefined) {
+  if (
+    name == undefined ||
+    Description === undefined ||
+    img === undefined ||
+    HowTo === undefined ||
+    ingredients === undefined
+  ) {
     throw IncompleteRecipeError();
   }
 
   if (userId != undefined) {
     const user = await userRepositories.findUser(userId);
-    if (!user) throw badRequestError('InvalidUserIdError');
+    if (!user) throw badRequestError('Invalid UserId Error');
   }
 
-  const Recipe = await recipeRepositories.addRecipe(name, Description, img, userId);
+  const Recipe = await recipeRepositories.addRecipe(name, Description, img, HowTo, userId);
   const RecipeId = Recipe.id;
+  console.log(Recipe);
 
   ingredients.map(async (i) => {
     await recipeRepositories.addIngredients(RecipeId, i.quantity, i.name, i.measureUnit);

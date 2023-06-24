@@ -12,15 +12,17 @@ export async function addRecipies(req: Request, res: Response, Next: NextFunctio
       Description,
       img,
       Ingredients,
+      HowTo,
     }: {
       userId: number;
       name: string;
       Description: string;
       img: string;
       Ingredients: Omit<Ingredients, 'id, RecipeId'>[];
+      HowTo: string;
     } = req.body;
 
-    const createRecipe = await recipeServices.createRecipe(name, Description, img, Ingredients, userId);
+    const createRecipe = await recipeServices.createRecipe(name, Description, img, Ingredients, HowTo, userId);
 
     return res.status(httpStatus.CREATED).send(createRecipe);
   } catch (error) {

@@ -1,6 +1,8 @@
 import { prisma } from '@/config/database';
+import { IncompleteRecipeError } from '@/errors/IncompleteRecipe';
+import { Recipe } from '@prisma/client';
 
-async function addRecipe(name: string, Description: string, img: string, userId?: number) {
+async function addRecipe(name: string, Description: string, img: string, HowTo: string, userId?: number) {
   let query;
 
   if (userId) {
@@ -18,8 +20,6 @@ async function addRecipe(name: string, Description: string, img: string, userId?
         name,
         Description,
         img,
-        //retirar userId por conta de bugs
-        userId: 3,
       },
     });
   }
@@ -40,16 +40,20 @@ async function findRecipes() {
 }
 
 async function addIngredients(RecipeId: number, quantity: number, name: string, measureUnit: string) {
-  const query = await prisma.ingredients.create({
-    data: {
-      RecipeId,
-      quantity,
-      name,
-      measureUnit,
-    },
-  });
+  try {
+    const query = await prisma.ingredients.create({
+      data: {
+        RecipeId,
+        quantity,
+        name,
+        measureUnit,
+      },
+    });
 
-  return query;
+    return query;
+  } catch (err) {
+    throw IncompleteRecipeError();
+  }
 }
 
 async function getRecipeById(id: number) {

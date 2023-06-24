@@ -7,6 +7,8 @@ async function main() {
   if (!user) {
     user = await prisma.user.create({
       data: {
+        name: 'anon',
+        image: 'https://upload.wikimedia.org/wikipedia/pt/0/04/Wojak.jpg',
         email: 'test@gmail.com',
         password: '123456',
       },
