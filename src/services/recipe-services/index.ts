@@ -3,23 +3,17 @@ import { badRequestError } from '@/errors/bad-request-error';
 import { notFoundError } from '@/errors/notFoundError';
 import recipeRepositories from '@/repositories/recipe-repositories';
 import userRepositories from '@/repositories/user-repositories';
-import { Ingredients } from '@prisma/client';
+import { Ingredients, Steps } from '@prisma/client';
 
 async function createRecipe(
   name: string,
   Description: string,
   img: string,
   ingredients: Omit<Ingredients, 'id, RecipeId'>[],
-  HowTo: string,
+  Steps: Omit<Steps, 'id, RecipeId'>[],
   userId?: number,
 ) {
-  if (
-    name == undefined ||
-    Description === undefined ||
-    img === undefined ||
-    HowTo === undefined ||
-    ingredients === undefined
-  ) {
+  if (name == undefined || Description === undefined || img === undefined || ingredients === undefined) {
     throw IncompleteRecipeError();
   }
 
@@ -28,12 +22,15 @@ async function createRecipe(
     if (!user) throw badRequestError('Invalid UserId Error');
   }
 
-  const Recipe = await recipeRepositories.addRecipe(name, Description, img, HowTo, userId);
+  const Recipe = await recipeRepositories.addRecipe(name, Description, img, userId);
   const RecipeId = Recipe.id;
-  console.log(Recipe);
 
   ingredients.map(async (i) => {
     await recipeRepositories.addIngredients(RecipeId, i.quantity, i.name, i.measureUnit);
+  });
+
+  Steps.map(async (i) => {
+    await recipeRepositories.addSteps(RecipeId, i.Description, i.img, i.step);
   });
 
   return Recipe;
@@ -41,7 +38,9 @@ async function createRecipe(
 
 async function findRecipes() {
   const recipes = await recipeRepositories.findRecipes();
-
+  if (recipes.length == 0) {
+    throw notFoundError('Recipes');
+  }
   return recipes;
 }
 
@@ -51,6 +50,7 @@ async function findRecipeById(id: number) {
   if (!recipe) {
     throw notFoundError('Recipe');
   }
+
   return recipe;
 }
 

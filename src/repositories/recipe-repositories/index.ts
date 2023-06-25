@@ -1,8 +1,8 @@
 import { prisma } from '@/config/database';
 import { IncompleteRecipeError } from '@/errors/IncompleteRecipe';
-import { Recipe } from '@prisma/client';
+import { Recipe, Steps } from '@prisma/client';
 
-async function addRecipe(name: string, Description: string, img: string, HowTo: string, userId?: number) {
+async function addRecipe(name: string, Description: string, img: string, userId?: number) {
   let query;
 
   if (userId) {
@@ -56,7 +56,24 @@ async function addIngredients(RecipeId: number, quantity: number, name: string, 
   }
 }
 
-async function getRecipeById(id: number) {
+async function addSteps(RecipeId: number, Description: string, img: string | null, step: number): Promise<Steps> {
+  try {
+    const query = await prisma.steps.create({
+      data: {
+        RecipeId,
+        Description,
+        img,
+        step,
+      },
+    });
+
+    return query;
+  } catch (err) {
+    throw IncompleteRecipeError();
+  }
+}
+
+async function getRecipeById(id: number): Promise<Recipe> {
   const query = await prisma.recipe.findUnique({
     where: { id },
     include: { Ingredients: true, User: true },
@@ -69,4 +86,5 @@ export default {
   findRecipes,
   addIngredients,
   getRecipeById,
+  addSteps,
 };

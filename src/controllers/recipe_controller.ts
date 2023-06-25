@@ -1,6 +1,6 @@
 import { badRequestError } from '@/errors/bad-request-error';
 import recipeServices from '@/services/recipe-services';
-import { Ingredients } from '@prisma/client';
+import { Ingredients, Steps } from '@prisma/client';
 import { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
 
@@ -12,17 +12,17 @@ export async function addRecipies(req: Request, res: Response, Next: NextFunctio
       Description,
       img,
       Ingredients,
-      HowTo,
+      Steps,
     }: {
       userId: number;
       name: string;
       Description: string;
       img: string;
       Ingredients: Omit<Ingredients, 'id, RecipeId'>[];
-      HowTo: string;
+      Steps: Omit<Steps, 'id, RecipeId'>[];
     } = req.body;
 
-    const createRecipe = await recipeServices.createRecipe(name, Description, img, Ingredients, HowTo, userId);
+    const createRecipe = await recipeServices.createRecipe(name, Description, img, Ingredients, Steps, userId);
 
     return res.status(httpStatus.CREATED).send(createRecipe);
   } catch (error) {
@@ -33,7 +33,7 @@ export async function addRecipies(req: Request, res: Response, Next: NextFunctio
 export async function getRecipes(req: Request, res: Response, Next: NextFunction) {
   try {
     const recipes = await recipeServices.findRecipes();
-
+    console.log(recipes);
     return res.status(httpStatus.OK).send(recipes);
   } catch (error) {
     Next(error);
@@ -48,9 +48,9 @@ export async function getRecipeById(req: Request, res: Response, Next: NextFunct
     if (!recipeId) {
       throw badRequestError();
     }
-    const recipes = await recipeServices.findRecipeById(recipeId);
+    const recipe = await recipeServices.findRecipeById(recipeId);
 
-    return res.status(httpStatus.OK).send(recipes);
+    return res.status(httpStatus.OK).send(recipe);
   } catch (error) {
     Next(error);
   }
