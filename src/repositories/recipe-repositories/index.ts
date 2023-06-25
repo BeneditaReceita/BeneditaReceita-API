@@ -1,28 +1,16 @@
-import { prisma } from '@/config/database';
-import { IncompleteRecipeError } from '@/errors/IncompleteRecipe';
-import { Recipe, Steps } from '@prisma/client';
+import { prisma } from '../../config/database';
+import { IncompleteRecipeError } from '../../errors/IncompleteRecipe';
+import { Recipe, Steps } from '../../../node_modules/.prisma/client/index';
 
 async function addRecipe(name: string, Description: string, img: string, userId?: number) {
-  let query;
-
-  if (userId) {
-    query = await prisma.recipe.create({
-      data: {
-        name,
-        Description,
-        img,
-        userId,
-      },
-    });
-  } else {
-    query = await prisma.recipe.create({
-      data: {
-        name,
-        Description,
-        img,
-      },
-    });
-  }
+  const query = await prisma.recipe.create({
+    data: {
+      name,
+      Description,
+      img,
+      userId,
+    },
+  });
 
   return query;
 }

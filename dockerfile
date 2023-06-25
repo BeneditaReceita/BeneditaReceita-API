@@ -1,13 +1,13 @@
-FROM node:alpine
+FROM node
 
-WORKDIR /usr/app
-
-COPY package*.json ./
-
-RUN npm i
+WORKDIR /usr/src
 
 COPY . .
 
-CMD [ "npm", "run", "dev" ]
-
 EXPOSE 4000
+
+RUN npm i
+
+RUN npm run build
+
+CMD ["npm", "start"]

@@ -1,6 +1,6 @@
-import { badRequestError } from '@/errors/bad-request-error';
-import recipeServices from '@/services/recipe-services';
-import { Ingredients, Steps } from '@prisma/client';
+import { badRequestError } from '../errors/bad-request-error';
+import recipeServices from '../services/recipe-services';
+import { Ingredients, Steps } from '../../node_modules/.prisma/client';
 import { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
 

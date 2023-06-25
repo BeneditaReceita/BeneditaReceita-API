@@ -1,4 +1,4 @@
-import { ApplicationError } from '@/utils/protocols';
+import { ApplicationError } from '../utils/protocols';
 
 export function badRequestError(description?: string): ApplicationError {
   return {

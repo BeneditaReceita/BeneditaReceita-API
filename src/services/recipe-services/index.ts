@@ -1,9 +1,9 @@
-import { IncompleteRecipeError } from '@/errors/IncompleteRecipe';
-import { badRequestError } from '@/errors/bad-request-error';
-import { notFoundError } from '@/errors/notFoundError';
-import recipeRepositories from '@/repositories/recipe-repositories';
-import userRepositories from '@/repositories/user-repositories';
-import { Ingredients, Steps } from '@prisma/client';
+import { IncompleteRecipeError } from '../../errors/IncompleteRecipe';
+import { badRequestError } from '../../errors/bad-request-error';
+import { notFoundError } from '../../errors/notFoundError';
+import recipeRepositories from '../../repositories/recipe-repositories';
+import userRepositories from '../../repositories/user-repositories';
+import { Ingredients, Steps } from '../../../node_modules/.prisma/client/index';
 
 async function createRecipe(
   name: string,
