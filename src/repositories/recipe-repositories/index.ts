@@ -76,7 +76,7 @@ async function addSteps(RecipeId: number, Description: string, img: string | nul
 async function getRecipeById(id: number): Promise<Recipe> {
   const query = await prisma.recipe.findUnique({
     where: { id },
-    include: { Ingredients: true, Steps: true, User: true },
+    include: { Ingredients: true, Steps: { orderBy: { step: 'asc' } }, User: true },
   });
   return query;
 }
