@@ -33,7 +33,7 @@ export async function addRecipies(req: Request, res: Response, Next: NextFunctio
 export async function getRecipes(req: Request, res: Response, Next: NextFunction) {
   try {
     const recipes = await recipeServices.findRecipes();
-    console.log(recipes);
+
     return res.status(httpStatus.OK).send(recipes);
   } catch (error) {
     Next(error);
