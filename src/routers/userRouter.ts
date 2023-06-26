@@ -1,11 +1,11 @@
 import { Router } from 'express';
 
-import { createUserSchema } from '../schemas/UserSchemas';
+import { createUserSchema, loginSchema } from '../schemas/UserSchemas';
 import { validateBody } from '../middlewares/validationMiddleware';
-import { usersPost } from '../controllers/UserController';
+import { singInPost, usersPost } from '../controllers/UserController';
 
 const usersRouter = Router();
 
-usersRouter.post('', validateBody(createUserSchema), usersPost);
+usersRouter.post('', validateBody(createUserSchema), usersPost).post('/signin', validateBody(loginSchema), singInPost);
 
 export { usersRouter };
