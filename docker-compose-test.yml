@@ -12,7 +12,7 @@ services:
     container_name: node
     build: ./back-end
     ports:
-      - 5000:5000
+      - 4000:4000
     depends_on:
       - postgres
     env_file:
