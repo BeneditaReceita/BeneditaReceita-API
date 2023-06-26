@@ -6,7 +6,7 @@ services:
     ports:
       - 5433:5432
     env_file:
-      - /.env.test
+      - ./.env.test
 
   node:
     container_name: node
@@ -16,4 +16,4 @@ services:
     depends_on:
       - postgres
     env_file:
-      - /.env.test
+      - ./.env.test
