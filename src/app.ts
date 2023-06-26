@@ -5,7 +5,7 @@ import cors from 'cors';
 import loadEnv from './config/envs';
 import { connectDb, disconnectDB } from './config/database';
 import { recipesRouter } from './routers/recipeRouter';
-import { handleApplicationErrors } from './middlewares/error_handling_middleware';
+import { handleApplicationErrors } from './middlewares/errorHandlingMiddleware';
 
 loadEnv();
 

@@ -1,6 +1,6 @@
 import { IncompleteRecipeError } from '../../errors/IncompleteRecipe';
-import { badRequestError } from '../../errors/bad-request-error';
-import { notFoundError } from '../../errors/notFoundError';
+import { badRequestError } from '../../errors/BadRequestError';
+import { notFoundError } from '../../errors/NotFoundError';
 import recipeRepositories from '../../repositories/recipe-repositories';
 import userRepositories from '../../repositories/user-repositories';
 import { Ingredients, Steps } from '../../../node_modules/.prisma/client/index';
