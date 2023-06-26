@@ -6,6 +6,7 @@ import loadEnv from './config/envs';
 import { connectDb, disconnectDB } from './config/database';
 import { recipesRouter } from './routers/recipeRouter';
 import { handleApplicationErrors } from './middlewares/errorHandlingMiddleware';
+import { usersRouter } from './routers/userRouter';
 
 loadEnv();
 
@@ -18,6 +19,7 @@ app
     return res.status(200).send('OK!');
   })
   .use('/recipes', recipesRouter)
+  .use('/user', usersRouter)
   .use(handleApplicationErrors);
 
 export async function init(): Promise<Express> {
