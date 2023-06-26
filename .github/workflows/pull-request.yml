@@ -10,10 +10,10 @@ jobs:
         uses: SpicyPizza/create-envfile@v1.3.1
         with:
           envkey_PORT: 4000
-          envkey_POSTGRES_USER: 'postgres'
-          envkey_POSTGRES_PASSWORD: 'postgres'
-          envkey_POSTGRES_DB: 'passwords'
-          envkey_DATABASE_URL: 'postgresql://postgres:postgres@postgres:5432/passwords'
+          envkey_POSTGRES_USER: "postgres"
+          envkey_POSTGRES_PASSWORD: "postgres"
+          envkey_POSTGRES_DB: "passwords"
+          envkey_DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/passwords"
           directory: projeto22-autoral-back-end
           file_name: .env.test
       - name: Run tests
