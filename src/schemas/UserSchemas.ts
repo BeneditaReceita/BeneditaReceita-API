@@ -5,4 +5,5 @@ export const createUserSchema = Joi.object({
   image: Joi.string().uri().required(),
   name: Joi.string().required(),
   password: Joi.string().required(),
+  confirmPassword: Joi.string(),
 });
